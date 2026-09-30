@@ -25,7 +25,7 @@ export const clerkwebhooks = async (req, res) => {
             _id:data.id,
             email:data.email_addresses[0].email_address,
             name:data.first_name + " " + data.last_name,
-            image:image_url,
+            image:data.image_url,
             resume:''
         }
         await User.create(userData)
@@ -36,7 +36,7 @@ export const clerkwebhooks = async (req, res) => {
         const userData ={
             email:data.email_addresses[0].email_address,
             name:data.first_name + " " + data.last_name,
-            image:image_url,
+            image:data.image_url,
         }
         await User.findByIdAndUpdate(data.id,userData)
         res.json({})
@@ -48,6 +48,7 @@ export const clerkwebhooks = async (req, res) => {
         break;
       }
       default:
+        res.json({})
         break;
     }
   } catch (error) {

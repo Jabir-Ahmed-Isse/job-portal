@@ -366,10 +366,6 @@ export const getCompanyPostedJobs = async (req, res) => {
     const companyId = req.company._id;
     const jobs = await Job.find({ companyId });
 
-    if (!jobs || jobs.length === 0) {
-      return res.json({ success: false, message: "No Jobs Found" });
-    }
-
     res.json({ success: true, jobsData: jobs });
   } catch (err) {
     res.json({ success: false, message: err.message });
@@ -381,8 +377,13 @@ export const ChangeJobApplicationsStatus = async (req, res) => {
   try {
     const { id, status } = req.body;
 
-    const updated = await JobApplication.findByIdAndUpdate(
-      id,
+    if (!["Pending", "Accepted", "Rejected"].includes(status)) {
+      return res.status(400).json({ success: false, message: "Invalid status" });
+    }
+
+    // Only let a company update applications for its own jobs
+    const updated = await JobApplication.findOneAndUpdate(
+      { _id: id, companyId: req.company._id },
       { status },
       { new: true }
     );
@@ -417,6 +418,25 @@ export const ChangeVisibility = async (req, res) => {
     await job.save();
 
     res.json({ success: true, job });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+};
+
+// Dashboard stats for the logged-in company
+export const getCompanyStats = async (req, res) => {
+  try {
+    const companyId = req.company._id;
+    const now = new Date();
+
+    const [jobs, activeJobs, applicants, pending] = await Promise.all([
+      Job.countDocuments({ companyId }),
+      Job.countDocuments({ companyId, visible: true, expireDate: { $gt: now } }),
+      JobApplication.countDocuments({ companyId }),
+      JobApplication.countDocuments({ companyId, status: "Pending" }),
+    ]);
+
+    res.json({ success: true, stats: { jobs, activeJobs, applicants, pending } });
   } catch (err) {
     res.json({ success: false, message: err.message });
   }

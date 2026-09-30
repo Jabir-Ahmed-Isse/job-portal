@@ -68,10 +68,6 @@ export const getJobs = async (req, res) => {
       select: "-password",
     });
 
-    if (!jobs || jobs.length === 0) {
-      return res.status(404).json({ success: false, message: "No Jobs Found" });
-    }
-
     res.json({ success: true, jobs });
   } catch (error) {
     console.error("Error fetching jobs:", error);

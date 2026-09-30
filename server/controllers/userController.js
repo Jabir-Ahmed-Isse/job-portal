@@ -90,10 +90,6 @@ export const getUserJobApplications = async (req, res) => {
       .populate("jobId", "title description location category level salary")
       .exec();
 
-    if (!applications || applications.length === 0) {
-      return res.status(404).json({ success: false, message: "No applications found" });
-    }
-
     res.json({ success: true, applications });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
