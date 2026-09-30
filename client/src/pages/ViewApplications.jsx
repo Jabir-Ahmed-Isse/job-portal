@@ -1,3 +1,4 @@
+// Dashboard page listing applicants to the company's jobs, with Accept/Reject actions.
 import React, { useContext, useEffect, useState } from 'react'
 import { FaDownload } from 'react-icons/fa'
 import { AppContext } from '../context/appContext'

@@ -1,3 +1,4 @@
+// A job seeker. _id is the Clerk user ID (a string), not a Mongo ObjectId.
 import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({

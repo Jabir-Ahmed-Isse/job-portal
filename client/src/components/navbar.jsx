@@ -1,3 +1,5 @@
+// Top bar for public pages. Shows company/job-seeker login buttons, or the
+// signed-in job seeker's name, applications link and Clerk account menu.
 import React, { useContext, useEffect } from 'react'
 import { FaBriefcase } from 'react-icons/fa'
 import { useClerk,UserButton,useUser } from '@clerk/clerk-react'
@@ -13,12 +15,6 @@ function Navbar() {
 
   const { setShowRecriuterLogin }=useContext(AppContext)
 
-  // useEffect (()=>{
-  //   // document.body.style.overflow='hidden'
-  //   return ()=>{
-  //     document.body.style.overflow = 'unset'
-  //   }
-  // },[])
   return (
     <>
       <h1 className="cursor-pointer absolute top-5 left-5 flex items-center space-x-1 text-xl font-semibold">

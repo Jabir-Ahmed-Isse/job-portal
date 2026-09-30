@@ -1,3 +1,5 @@
+// Company routes, mounted at /api/company. Everything except register and
+// login requires a company JWT (protectCompany).
 import express from 'express';
 import { getCompanyData, loginCompany, registerCompany ,postJob} from '../controllers/companyController.js';
 import { getCompanyJobApplicants, getCompanyPostedJobs,ChangeJobApplicationsStatus,ChangeVisibility,getCompanyStats } from '../controllers/companyController.js'; 
@@ -14,6 +16,8 @@ router.post('/login', loginCompany);
 
 // Get Company Data
 router.get('/company', protectCompany,getCompanyData)
+
+// Get dashboard stats (job and applicant counts)
 router.get('/stats', protectCompany, getCompanyStats)
 
 // Post a  Job

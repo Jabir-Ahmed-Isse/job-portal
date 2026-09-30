@@ -1,3 +1,4 @@
+// "Download the app" promo banner on the home page.
 import React from 'react';
 import sgirl from '../assets/sgirl.png';
 

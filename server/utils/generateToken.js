@@ -1,3 +1,4 @@
+// Creates the JWT a company uses to call protected /api/company routes.
 import jwt from 'jsonwebtoken';
 
 const generateToken = (id) => {

@@ -1,3 +1,5 @@
+// One application by a user to a job. status is Pending, Accepted or Rejected.
+// companyId is copied from the job so companies can query their applicants directly.
 import mongoose from 'mongoose'
 
 const JobApplicationSchema = new mongoose.Schema({

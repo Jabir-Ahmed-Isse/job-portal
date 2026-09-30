@@ -1,10 +1,11 @@
+// App entry point: wraps the app in Clerk auth, the router and the shared AppContext.
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './style.css'
 import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
 import { AppContextProvider } from './context/appContext.jsx'
-// Import your Publishable Key
+// Clerk handles job-seeker sign-in; the key comes from client/.env
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 if (!PUBLISHABLE_KEY) {

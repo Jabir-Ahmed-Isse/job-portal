@@ -1,3 +1,5 @@
+// Company login / sign-up dialog. Sign-up has two steps: details, then logo upload.
+// On success the JWT is saved to localStorage and the company goes to the dashboard.
 import React, { useContext, useState } from 'react';
 import { assets } from '../assets/assets';
 import { AppContext } from '../context/appContext';

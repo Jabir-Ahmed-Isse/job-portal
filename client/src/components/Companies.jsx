@@ -1,7 +1,8 @@
+// "Trusted by" logo strip on the home page.
 import React from 'react';
 import hormuud from '../assets/hormuud.png';
-import somtel from '../assets/Somtel_logo.JPG';
-import primierbank from '../assets/premier.JPG';
+import somtel from '../assets/Somtel_logo.jpg';
+import primierbank from '../assets/premier.jpg';
 import microsoft from '../assets/microsoft_logo.svg';
 import amazon from '../assets/amazon_logo.png';
 import university from '../assets/muniver.png'

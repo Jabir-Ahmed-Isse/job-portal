@@ -1,68 +1,6 @@
-
-// import "./config/instrument.js";
-// import express from "express";
-// import cors from "cors";
-// import "dotenv/config";
-// import connectDB from "./config/db.js";
-// import * as Sentry from "@sentry/node";
-// import { clerkMiddleware } from "@clerk/express";
-// import { clerkwebhooks } from "./controllers/webhooks.js";
-// import companyRoutes from "./routes/companyRouter.js";
-// import connectCloudinary from "./config/cloudinary.js";
-// import jobRoutes from "./routes/jobRoutes.js";
-// import userRoutes from "./routes/userRoutes.js";
-
-
-// const app = express();
-
-// // ✅ Initialize Sentry (without tracing)
-
-
-
-
-// // Connect to database and cloudinary
-// await connectDB();
-// await connectCloudinary();
-
-// // Standard middlewares
-// app.use(cors());
-// app.use(express.json());
-
-// // ✅ Clerk middleware before protected routes
-// app.use(clerkMiddleware());
-
-// // Public route
-// app.get("/", (req, res) => {
-//   res.send("API Is Working");
-// });
-
-// // Route to test Sentry error logging
-// app.get("/debug-sentry", () => {
-//   throw new Error("My first Sentry error!");
-// });
-
-// // Clerk webhook
-// app.post("/webhooks", clerkwebhooks);
-
-// // Protected API routes
-// app.use("/api/company", companyRoutes);
-// app.use("/api/jobs", jobRoutes);
-// app.use("/api/users", userRoutes);
-
-// // ✅ Sentry request handler — must come early
-//  Sentry.setupExpressErrorHandler(app);
-
-// // Start server
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
-// });
-
-
-
-
-// server.js
-
+// Express API server: connects to MongoDB and Cloudinary, mounts the company,
+// job and user routes, and runs a nightly job that hides expired listings.
+// Sentry must be imported first so it can instrument everything else.
 import "./config/instrument.js";
 import express from "express";
 import cors from "cors";
@@ -76,23 +14,23 @@ import connectCloudinary from "./config/cloudinary.js";
 import jobRoutes from "./routes/jobRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
-// ✅ New: Cron and Job model import
+// Used by the nightly cron job below
 import cron from "node-cron";
 import Job from "./models/Job.js";
 
 // Initialize Express
 const app = express();
 
-// ✅ Initialize DB and Cloudinary
+// Connect to the database and configure Cloudinary before accepting requests
 await connectDB();
 await connectCloudinary();
 
-// ✅ Middlewares
+// Middlewares (clerkMiddleware reads the Clerk session for job-seeker routes)
 app.use(cors());
 app.use(express.json());
 app.use(clerkMiddleware());
 
-// ✅ Routes
+// Routes
 app.get("/", (req, res) => {
   res.send("API Is Working");
 });
@@ -106,7 +44,7 @@ app.use("/api/company", companyRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/users", userRoutes);
 
-// ✅ Cron Job: Hide expired jobs every night at midnight
+// Cron job: hide expired jobs every night at midnight
 cron.schedule("0 0 * * *", async () => {
   const now = new Date();
   try {
@@ -120,10 +58,10 @@ cron.schedule("0 0 * * *", async () => {
   }
 });
 
-// ✅ Sentry error handler
+// Report unhandled errors to Sentry (must come after all routes)
 Sentry.setupExpressErrorHandler(app);
 
-// ✅ Start Server
+// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

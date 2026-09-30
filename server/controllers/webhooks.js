@@ -1,24 +1,25 @@
 import { Webhook } from "svix";
 import User from "../models/User.js";
 
-// API Controller function to Manage Clerk User with database
+// Keeps the User collection in sync with Clerk. Clerk calls this endpoint when a
+// user is created, updated or deleted; the signature is checked with CLERK_KEY.
 
 export const clerkwebhooks = async (req, res) => {
   try {
-    // create a svix instance
+    // Clerk signs webhooks with Svix
     const whook = new Webhook(process.env.CLERK_KEY);
 
-    // Verifying Headers
+    // Reject requests that were not signed by Clerk
     await whook.verify(JSON.stringify(req.body), {
       "svix-id": req.headers["svix-id"],
       "svix-timestamp": req.headers["svix-timestamp"],
       "svix-signature": req.headers["svix-signature"],
     });
 
-    // Getting Data from request body
+    // Event payload
     const { data, type } = req.body;
 
-    // Switch Cases for different Events
+    // Handle each event type
     switch (type) {
       case "user.created": {
         const userData ={

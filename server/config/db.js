@@ -1,3 +1,5 @@
+// Connects to MongoDB. MONGODB_URI is the server address; the "job-portal"
+// database name is appended here.
 import mongoose from "mongoose";
 import "dotenv/config";
 

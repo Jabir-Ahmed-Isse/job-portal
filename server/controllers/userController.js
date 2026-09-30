@@ -1,13 +1,15 @@
+// Handlers for job-seeker actions. Routes are protected by Clerk, so req.auth.userId
+// is the Clerk user ID, which is also the User document _id.
 
 import Job from "../models/Job.js";
 import JobApplication from "../models/JobApplication.js";
 import User from "../models/User.js";
 import { v2 as cloudinary } from "cloudinary";
 
-// Correct Clerk import
+// clerkClient looks up job-seeker profiles in Clerk
 import { clerkClient } from "@clerk/express";
 
-// ✅ Get User Data — create if not in DB
+// Get the logged-in job seeker; create their DB record from Clerk on first visit
 export const getUserData = async (req, res) => {
   try {
     const { userId } = req.auth;
@@ -50,7 +52,7 @@ export const getUserData = async (req, res) => {
   }
 };
 
-// ✅ Apply for a job
+// Apply for a job (one application per user per job)
 export const applyForJob = async (req, res) => {
   const { jobId } = req.body;
   const userId = req.auth?.userId;
@@ -80,7 +82,7 @@ export const applyForJob = async (req, res) => {
   }
 };
 
-// ✅ Get user's job applications
+// Get the logged-in user's job applications with job and company details
 export const getUserJobApplications = async (req, res) => {
   const userId = req.auth?.userId;
 
@@ -96,7 +98,7 @@ export const getUserJobApplications = async (req, res) => {
   }
 };
 
-// ✅ Upload resume
+// Upload a resume to Cloudinary and save its URL on the user
 export const updateUserResume = async (req, res) => {
   const userId = req.auth?.userId;
 

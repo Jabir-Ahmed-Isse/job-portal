@@ -1,28 +1,4 @@
-// import express from "express";
-// import {
-//   applyForJob,
-//   getUserData,
-//   getUserJobApplications,
-//   updateUserResume,
-// } from "../controllers/userController.js";
-// import upload from "../config/multer.js";
-
-// const router = express.Router();
-
-// // Get user data
-// router.get("/user", getUserData);
-
-// // Apply for a job
-// router.post("/apply", applyForJob);
-
-// // get applied jobs data
-// router.get("/applications", getUserJobApplications);
-
-// // Update user profile (resume)
-// router.post("update-resume", upload.single("resume"), updateUserResume);
-
-// export default router;
-// userRoutes.js
+// Job-seeker routes, mounted at /api/users. All require a Clerk session.
 import express from "express";
 import {
   applyForJob,
@@ -37,14 +13,16 @@ import { requireAuth } from "@clerk/express";
 
 const router = express.Router();
 
-// Protect routes with Clerk authentication middleware
+// Get (or create) the logged-in user
 router.get("/user",requireAuth(),getUserData);
 
+// Apply for a job
 router.post("/apply",requireAuth(),applyForJob);
 
+// List the user's applications
 router.get("/applications",requireAuth(),getUserJobApplications);
 
-// Added missing slash before update-resume and applied requireAuth middleware
+// Upload a resume (PDF) as multipart field "resume"
 router.post("/update-resume",requireAuth(),upload.single("resume"),updateUserResume);
 
 export default router;

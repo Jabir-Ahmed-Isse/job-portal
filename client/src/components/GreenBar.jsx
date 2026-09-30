@@ -1,3 +1,5 @@
+// Hero section with the job title/location search. Searching updates the shared
+// searchFilter, which JobListing uses to filter the job board.
 import React, { useContext, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MapPin } from 'lucide-react';

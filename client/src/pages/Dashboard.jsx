@@ -1,3 +1,5 @@
+// Company dashboard: header, sidebar and stat cards. Sub-pages (Add Job,
+// Manage Jobs, View Applications) render in the <Outlet />.
 import React, { useContext, useEffect, useState } from 'react'
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { FaBriefcase, FaUsers, FaBuilding } from 'react-icons/fa'
@@ -19,8 +21,7 @@ function Dashboard() {
     pending: 0,
   })
 
-  // Hide cards when sidebar routes are active (anything under /dashboard except the main dashboard page)
-  // Assuming dashboard main page is '/dashboard' only
+  // Stat cards only show on /dashboard itself, not on its sub-pages
   const showCards = location.pathname === '/dashboard'
 
   // Send visitors who aren't logged in as a company back to the login dialog
@@ -147,7 +148,7 @@ function Dashboard() {
           {/* Stat Cards - only show on dashboard root */}
           {showCards && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {/* Card 1 */}
+              {/* Jobs posted */}
               <div className="bg-white shadow-xl rounded-xl p-6">
                 <div className="flex items-center space-x-4 mb-2">
                   <div className="bg-lime-100 text-lime-600 p-3 rounded-full">
@@ -161,7 +162,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-500">Total posted jobs</p>
               </div>
 
-              {/* Card 2 */}
+              {/* Total applicants */}
               <div className="bg-white shadow-xl rounded-xl p-6">
                 <div className="flex items-center space-x-4 mb-2">
                   <div className="bg-blue-100 text-blue-600 p-3 rounded-full">
@@ -175,7 +176,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-500">People who applied</p>
               </div>
 
-              {/* Card 3 */}
+              {/* Active jobs */}
               <div className="bg-white shadow-xl rounded-xl p-6">
                 <div className="flex items-center space-x-4 mb-2">
                   <div className="bg-purple-100 text-purple-600 p-3 rounded-full">
@@ -189,7 +190,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-500">Visible and not expired</p>
               </div>
 
-              {/* Card 4 */}
+              {/* Pending applications */}
               <div className="bg-white shadow-xl rounded-xl p-6">
                 <div className="flex items-center space-x-4 mb-2">
                   <div className="bg-pink-100 text-pink-600 p-3 rounded-full">

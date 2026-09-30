@@ -1,3 +1,4 @@
+// Job seeker's page: upload or view their resume, and see the status of jobs they applied to.
 import React, { useContext, useState } from 'react';
 import Navbar from '../components/navbar';
 import { assets } from '../assets/assets';

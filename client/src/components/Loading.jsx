@@ -1,3 +1,4 @@
+// Spinner shown while a page is loading its data.
 import React from 'react'
 
 function Loading() {

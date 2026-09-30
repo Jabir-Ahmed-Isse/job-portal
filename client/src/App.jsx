@@ -1,3 +1,5 @@
+// Top-level routes. The company login dialog and toast messages sit above every page.
+// Dashboard sub-pages are only registered while a company is logged in.
 import { useContext } from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';

@@ -1,3 +1,4 @@
+// Job board: category/location filters on the left, paginated job cards (6 per page) on the right.
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/appContext'
 import crossicon from '../assets/cross_icon.svg'
@@ -16,6 +17,7 @@ function JobListing() {
   const[selectedLocations,setSelectedLocations]=useState([])
   const[filteredJobs,setFilteredJobs]=useState(jobs)
 
+  // Tick/untick a filter checkbox
   const handleCategory = (category) => {
     setSelectedCategories(
         prev => prev.includes(category)? prev.filter(c => c !== category):[...prev,category]
@@ -26,6 +28,8 @@ function JobListing() {
         prev => prev.includes(location)? prev.filter(c => c !== location):[...prev,location]
     )
   }
+  // Re-filter whenever jobs, checkboxes or the search bar change. A job must match
+  // every active filter; an empty filter matches everything. Newest jobs first.
   useEffect(()=>{
     const matchCategory = job => selectedCategories.length === 0 || selectedCategories.includes(job.category)
     const matchLocation = job => selectedLocations.length === 0 || selectedLocations.includes(job.location)

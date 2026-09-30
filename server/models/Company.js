@@ -1,3 +1,5 @@
+// A company (recruiter) account. Passwords are stored as bcrypt hashes;
+// image is the logo URL (Cloudinary).
 import mongoose from 'mongoose'
 
 const companySchema = new mongoose.Schema({

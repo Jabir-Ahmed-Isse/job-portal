@@ -1,3 +1,4 @@
+// Site footer with links, contact details and social icons.
 import React from "react";
 import {
   Twitter,
@@ -5,7 +6,7 @@ import {
   Linkedin,
   Mail,
   Phone,
-  Facebook, // Added Facebook import
+  Facebook,
 } from "lucide-react";
 
 const Footer = () => {
@@ -51,7 +52,7 @@ const Footer = () => {
             <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">
               <Linkedin className="h-5 w-5 hover:text-white" />
             </a>
-            {/* Facebook icon added */}
+            {/* Facebook */}
             <a href="https://www.facebook.com/share/1YVCWABFLc/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
               <Facebook className="h-5 w-5 hover:text-white" />
             </a>

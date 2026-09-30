@@ -1,3 +1,4 @@
+// Configures the Cloudinary SDK (used for company logos and resumes) from .env.
 import { v2 as cloudinary } from 'cloudinary';
 
 const connectCloudinary = async () => {

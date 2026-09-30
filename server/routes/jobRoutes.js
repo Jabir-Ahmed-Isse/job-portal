@@ -1,3 +1,4 @@
+// Public job board routes (no login required).
 import express from "express";
 import { getJobById } from "../controllers/jobController.js";
 import { getJobs } from "../controllers/jobController.js";

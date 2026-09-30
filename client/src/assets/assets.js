@@ -1,3 +1,4 @@
+// Image imports and constants shared across the client (categories, locations, sample data).
 import logo from "./logo.svg";
 import search_icon from "./search_icon.svg";
 import company_icon from "./company_icon.svg";
@@ -34,8 +35,8 @@ import samsung_logo from './samsung_logo.png'
 import adobe_logo from './adobe_logo.png'
 import amazon_logo from './amazon_logo.png'
 import hormuud from './hormuud.png';
-import somtel from './Somtel_logo.JPG';
-import primierbank from './premier.JPG';
+import somtel from './Somtel_logo.jpg';
+import primierbank from './premier.jpg';
 import university from './muniver.png';
 
 export const assets = {
