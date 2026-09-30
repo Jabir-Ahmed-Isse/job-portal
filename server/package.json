@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "server": "npx nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@clerk/backend": "^1.29.1",
+    "@clerk/clerk-sdk-node": "^4.13.23",
+    "@clerk/express": "^1.4.20",
+    "@sentry/node": "^9.11.0",
+    "@sentry/profiling-node": "^9.11.0",
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "multer": "^1.4.5-lts.2",
+    "node-cron": "^4.1.0",
+    "nodemon": "^3.1.9",
+    "svix": "^1.42.0"
+  }
+}
