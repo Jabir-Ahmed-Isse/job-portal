@@ -18,12 +18,12 @@ function JobListing() {
 
   const handleCategory = (category) => {
     setSelectedCategories(
-        prev => prev.includes(category)? prev.filter(c => c !==c):[...prev,category]
+        prev => prev.includes(category)? prev.filter(c => c !== category):[...prev,category]
     )
   }
   const handleLocation = (location) => {
     setSelectedLocations(
-        prev => prev.includes(location)? prev.filter(c => c !==c):[...prev,location]
+        prev => prev.includes(location)? prev.filter(c => c !== location):[...prev,location]
     )
   }
   useEffect(()=>{
@@ -115,7 +115,7 @@ function JobListing() {
       </div>
 
       {/* Job Listings */}
-      <section className="w-full " id='#joblist'>
+      <section className="w-full " id='joblist'>
         <h3 className="text-2xl font-semibold text-gray-800 mb-2">Shaqooyinkii Ugu Dambeeyay</h3>
         <p className="text-gray-500 mb-6">Ka hel shaqooyinka jeceshahay oo meesha rabo ah iyo shirkadaha ugu sareeyo</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -127,7 +127,7 @@ function JobListing() {
         <div className="flex items-center justify-center gap-2 mt-6">
   {/* Left Arrow */}
   <a href="#joblist" className="p-2 hover:bg-gray-200 rounded-full transition" > 
-    <img src={left_arrow_icon} alt="Previous" className="w-5 h-5" onClick={()=> setCurrentPage(Math.max(currentPage-1),1)}/>
+    <img src={left_arrow_icon} alt="Previous" className="w-5 h-5" onClick={()=> setCurrentPage(Math.max(currentPage-1,1))}/>
   </a>
 
   {/* Page Numbers */}
@@ -141,7 +141,7 @@ function JobListing() {
 
   {/* Right Arrow */}
   <a href="#joblist" className="p-2 hover:bg-gray-200 rounded-full transition">
-    <img src={right_arrow_icon} alt="Next" className="w-5 h-5" onClick={()=> setCurrentPage(Math.min(currentPage+1,Math.ceil(filteredJobs.length / 6)))}/>
+    <img src={right_arrow_icon} alt="Next" className="w-5 h-5" onClick={()=> setCurrentPage(Math.max(1,Math.min(currentPage+1,Math.ceil(filteredJobs.length / 6))))}/>
   </a>
 </div>
 

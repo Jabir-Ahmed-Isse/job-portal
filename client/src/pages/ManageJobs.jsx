@@ -164,7 +164,7 @@ function ManageJobs() {
 
   // Count how many applicants per job
   const getApplicantCount = (jobId) => {
-    return applications.filter(app => app.jobId === jobId || (app.jobId._id && app.jobId._id === jobId)).length;
+    return applications.filter(app => app.jobId === jobId || app.jobId?._id === jobId).length;
   };
 
   // Toggle job visibility

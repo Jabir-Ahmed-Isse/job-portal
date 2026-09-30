@@ -31,7 +31,7 @@ function Navbar() {
         user
         ?<div className="absolute top-0 right-0 p-4 space-x-4 flex items-center gap-1">
           <Link to={'/applications'}>applied jobs</Link>
-          <p>hi {user.firstName+""+user.lastName}</p>
+          <p>hi {user.fullName || user.firstName || ""}</p>
           <UserButton/>
         </div>
         :   <div className="absolute top-0 right-0 p-4 space-x-4">

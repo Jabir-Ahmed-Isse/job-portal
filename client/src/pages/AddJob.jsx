@@ -179,6 +179,9 @@ function AddJob() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault()
+    if (!quillRef.current.getText().trim()) {
+      return toast.error('Please add a job description')
+    }
     try {
       const description = quillRef.current.root.innerHTML
       const expireDate = new Date(Date.now() + expireDays * 24 * 60 * 60 * 1000)
@@ -299,6 +302,8 @@ function AddJob() {
             placeholder="e.g. 1000"
             onChange={(e) => setSalary(e.target.value)}
             value={salary}
+            min={1}
+            required
             className="w-full border rounded px-2 py-1 text-sm"
           />
         </div>

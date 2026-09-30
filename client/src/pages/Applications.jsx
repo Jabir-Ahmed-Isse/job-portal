@@ -17,6 +17,9 @@ function Applications() {
   const { backEndUrl, userData, userApplications = [], fetchUserData } = useContext(AppContext);
 
   const updateResume = async () => {
+    if (!resume) {
+      return toast.error('Please select a resume (PDF) first');
+    }
     try {
       const formData = new FormData();
       formData.append('resume', resume);
@@ -102,8 +105,8 @@ function Applications() {
             </tr>
           </thead>
           <tbody>
-            {userApplications.length > 0 ? (
-              userApplications.map((job, index) => (
+            {userApplications.filter(job => job.jobId && job.companyId).length > 0 ? (
+              userApplications.filter(job => job.jobId && job.companyId).map((job, index) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="p-2 border-b flex items-center gap-2">
                     <img src={job.companyId.image} alt="" className="w-6 h-6" />

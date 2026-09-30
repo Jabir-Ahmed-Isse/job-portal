@@ -89,11 +89,11 @@ export const JobCategories = [
 export const JobLocations = [
     "Bosaso",
     "Beidoa",
-    "mogadishu",
+    "Mogadishu",
     "Dhusomareb",
-    "kismayo",
-    "guriel",
-    "jowhar"
+    "Kismayo",
+    "Guriel",
+    "Jowhar"
 ]
 
 // Sample data for Manage Jobs Page

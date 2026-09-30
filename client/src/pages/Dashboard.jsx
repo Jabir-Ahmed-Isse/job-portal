@@ -9,34 +9,46 @@ import axios from 'axios'
 function Dashboard() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { companyData, setCompanyToken, setCompanyData } = useContext(AppContext)
+  const { companyData, companyToken, setCompanyToken, setCompanyData, backEndUrl, setShowRecriuterLogin } = useContext(AppContext)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const [stats, setStats] = useState({
     jobs: 0,
+    activeJobs: 0,
     applicants: 0,
-    companies: 0,
-    users: 0,
+    pending: 0,
   })
 
   // Hide cards when sidebar routes are active (anything under /dashboard except the main dashboard page)
   // Assuming dashboard main page is '/dashboard' only
   const showCards = location.pathname === '/dashboard'
 
+  // Send visitors who aren't logged in as a company back to the login dialog
+  useEffect(() => {
+    if (!companyToken) {
+      navigate('/')
+      setShowRecriuterLogin(true)
+    }
+  }, [companyToken])
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get('/api/dashboard/stats')
-        setStats(res.data)
+        const { data } = await axios.get(`${backEndUrl}/api/company/stats`, {
+          headers: { Authorization: `Bearer ${companyToken}` },
+        })
+        if (data.success) {
+          setStats(data.stats)
+        }
       } catch (err) {
         console.error('Failed to fetch dashboard stats:', err)
       }
     }
 
-    if (showCards) {
+    if (showCards && companyToken) {
       fetchStats()
     }
-  }, [showCards])
+  }, [showCards, companyToken])
 
   const logOut = () => {
     setCompanyToken(null)
@@ -145,7 +157,7 @@ function Dashboard() {
                     <span className="font-semibold">Jobs</span>
                   </h3>
                 </div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-1">23</h2>
+                <h2 className="text-3xl font-bold text-gray-800 mb-1">{stats.jobs}</h2>
                 <p className="text-sm text-gray-500">Total posted jobs</p>
               </div>
 
@@ -159,7 +171,7 @@ function Dashboard() {
                     <span className="font-semibold">Applicants</span>
                   </h3>
                 </div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-1">3</h2>
+                <h2 className="text-3xl font-bold text-gray-800 mb-1">{stats.applicants}</h2>
                 <p className="text-sm text-gray-500">People who applied</p>
               </div>
 
@@ -170,11 +182,11 @@ function Dashboard() {
                     <FaBuilding className="text-2xl" />
                   </div>
                   <h3 className="flex items-center text-lg text-gray-700">
-                    <span className="font-semibold">Companies</span>
+                    <span className="font-semibold">Active Jobs</span>
                   </h3>
                 </div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-1">12</h2>
-                <p className="text-sm text-gray-500">Registered organizations</p>
+                <h2 className="text-3xl font-bold text-gray-800 mb-1">{stats.activeJobs}</h2>
+                <p className="text-sm text-gray-500">Visible and not expired</p>
               </div>
 
               {/* Card 4 */}
@@ -184,11 +196,11 @@ function Dashboard() {
                     <FaUsers className="text-2xl" />
                   </div>
                   <h3 className="flex items-center text-lg text-gray-700">
-                    <span className="font-semibold">Users</span>
+                    <span className="font-semibold">Pending</span>
                   </h3>
                 </div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-1">3</h2>
-                <p className="text-sm text-gray-500">Platform members</p>
+                <h2 className="text-3xl font-bold text-gray-800 mb-1">{stats.pending}</h2>
+                <p className="text-sm text-gray-500">Applications to review</p>
               </div>
             </div>
           )}

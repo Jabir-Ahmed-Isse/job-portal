@@ -69,7 +69,7 @@
 
 // const checkApplied = () => {
 //   if (!jobData) return; // ✅ prevent access if jobData is not yet loaded
-//   const hasApplied = userApplications.some(item => item.jobId._id === jobData._id);
+//   const hasApplied = userApplications.some(item => item.jobId?._id === jobData._id);
 //   setIsAlreadyApplied(hasApplied);
 // };
 
@@ -213,7 +213,7 @@ function Applyjob() {
 
   const checkApplied = () => {
     if (!jobData) return;
-    const hasApplied = userApplications.some(item => item.jobId._id === jobData._id);
+    const hasApplied = userApplications.some(item => item.jobId?._id === jobData._id);
     setIsAlreadyApplied(hasApplied);
   };
 

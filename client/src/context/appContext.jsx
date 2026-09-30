@@ -295,7 +295,13 @@ export const AppContextProvider = (props) => {
   const [jobs, setJobs] = useState([]);
   const [showRecriuterLogin, setShowRecriuterLogin] = useState(false);
 
-  const [companyToken, setCompanyToken] = useState(null);
+  const [companyToken, setCompanyToken] = useState(() => {
+    try {
+      return localStorage.getItem("companyToken");
+    } catch {
+      return null;
+    }
+  });
   const [companyData, setCompanyData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [userApplications, setApplications] = useState([]);
@@ -378,30 +384,28 @@ const fetchJobs = async () => {
         toast.error(data.message || "Failed to fetch company data");
       }
     } catch (error) {
-      toast.error(error.message || "Error fetching company data");
+      if (error.response?.status === 401) {
+        // Saved token is expired or invalid: log the company out quietly
+        localStorage.removeItem("companyToken");
+        setCompanyToken(null);
+        setCompanyData(null);
+      } else {
+        toast.error(error.message || "Error fetching company data");
+      }
     }
   };
  
 
 
 
-  // Fetch jobs on mount + load company token from localStorage
+  // Fetch jobs on mount
   useEffect(() => {
     fetchJobs();
-
-    const storedCompanyToken = localStorage.getItem("companyToken");
-    const storedRole = localStorage.getItem("role");
-
-    // Set company token only if the role is company
-    if (storedCompanyToken && storedRole === "company") {
-      setCompanyToken(storedCompanyToken);
-    }
   }, []);
 
-  // Fetch company data only if companyToken is present and role is company
+  // Fetch company data whenever a company token is present (restored from localStorage on load)
   useEffect(() => {
-    const role = localStorage.getItem("role");
-    if (companyToken && role === "company") {
+    if (companyToken) {
       fetchCompanyData();
     }
   }, [companyToken]);
@@ -413,6 +417,7 @@ const fetchJobs = async () => {
       fetchUserApplications();
     } else {
       setUserData(null);
+      setApplications([]);
     }
   }, [user]);
 
